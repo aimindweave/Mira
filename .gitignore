@@ -1,0 +1,25 @@
+# macOS
+.DS_Store
+
+# Backups
+*.bak
+*.bak-*
+*-bak.*
+*.bak-v*.mp4
+img.bak-*/
+
+# Internal artifacts (audit reports, content warehouse, AI prompt drafts)
+warehouse/
+
+# Secrets — never commit
+.env
+.env.local
+.env.*.local
+
+# Node (if anyone wires a build step later)
+node_modules/
+
+# Editor
+.vscode/
+.idea/
+*.swp

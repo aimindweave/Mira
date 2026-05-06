@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Memory Frame — The frame that knows your family.</title>
+  <meta name="description" content="A wood-framed display with on-device AI for your mom's living room. She talks to it. It listens. It shows her the photos that matter today. No app, no monthly fee, no cloud. Reserve for $1." />
+
+  <link rel="canonical" href="https://memoryframe.studio/" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="author" content="Mira" />
+
+  <meta property="og:title" content="Memory Frame — The frame that knows your family." />
+  <meta property="og:description" content="A wood-framed display with on-device AI. No app, no monthly fee, no cloud. Reserve for $1." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://memoryframe.studio/" />
+  <meta property="og:site_name" content="Memory Frame" />
+  <meta property="og:image" content="https://memoryframe.studio/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Memory Frame — The frame that knows your family." />
+  <meta name="twitter:description" content="A wood-framed display with on-device AI. No app, no monthly fee, no cloud. Reserve for $1." />
+  <meta name="twitter:image" content="https://memoryframe.studio/og-image.jpg" />
+
+  <script type="application/ld+json">
+  { "@context": "https://schema.org", "@type": "Organization", "name": "Mira", "url": "https://memoryframe.studio/", "description": "A small studio that watched their own parents put a frame face-down. We make Memory Frame.", "email": "hello@mira.studio" }
+  </script>
+  <script type="application/ld+json">
+  { "@context": "https://schema.org", "@type": "WebSite", "name": "Memory Frame", "url": "https://memoryframe.studio/", "publisher": { "@type": "Organization", "name": "Mira" } }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Memory Frame",
+    "description": "A wood-framed display with on-device AI for your mom's living room.",
+    "brand": { "@type": "Brand", "name": "Mira" },
+    "category": "Home & Garden > Decor > Picture Frames",
+    "image": "https://memoryframe.studio/og-image.jpg",
+    "offers": [
+      { "@type": "Offer", "name": "For Mom — Memory Frame 10\"", "price": "399.00", "priceCurrency": "USD", "availability": "https://schema.org/PreOrder", "url": "https://memoryframe.studio/#reserve" },
+      { "@type": "Offer", "name": "For Both Sides — Two Memory Frames 10\"", "price": "729.00", "priceCurrency": "USD", "availability": "https://schema.org/PreOrder", "url": "https://memoryframe.studio/#reserve" },
+      { "@type": "Offer", "name": "For the Family Wall — Memory Frame 15\" Premium", "price": "699.00", "priceCurrency": "USD", "availability": "https://schema.org/PreOrder", "url": "https://memoryframe.studio/#reserve" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "My mom can't do Wi-Fi. She'll never set this up.", "acceptedAnswer": { "@type": "Answer", "text": "You set up the frame with your phone in about 90 seconds before you mail it — your mom only ever plugs it in. We can also do the setup for you for free." } },
+      { "@type": "Question", "name": "Will this work across iPhone, Android, and email?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Memory Frame syncs over Wi-Fi from any phone or computer via a private link. No app store, no account creation." } },
+      { "@type": "Question", "name": "What if Mira shuts down?", "acceptedAnswer": { "@type": "Answer", "text": "The AI is on a chip inside the frame. No cloud means no service to lose. The frame keeps working even if our website is gone tomorrow." } },
+      { "@type": "Question", "name": "What if my parent has dementia?", "acceptedAnswer": { "@type": "Answer", "text": "Memory Frame may not be the right product for moderate or severe dementia. Please reach out before reserving." } },
+      { "@type": "Question", "name": "Who can see my photos?", "acceptedAnswer": { "@type": "Answer", "text": "Only the people you share the photo link with. Photos never leave the frame after Wi-Fi sync." } },
+      { "@type": "Question", "name": "When will it ship?", "acceptedAnswer": { "@type": "Answer", "text": "We're finalizing our first production run. Your ship date will be confirmed by email before your card is charged." } }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+  <script src="https://unpkg.com/framer-motion@11.11.17/dist/framer-motion.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            heading: ['"Instrument Serif"', 'serif'],
+            body: ['Barlow', 'sans-serif'],
+          },
+          borderRadius: {
+            DEFAULT: '9999px',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    body {
+      margin: 0;
+      background: #1a120c;
+      color: #fff;
+      font-family: 'Barlow', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+    *::selection { background: rgba(255,255,255,0.18); }
+    .bg-black { background-color: #1a120c !important; }
+    /* Cream theme — applied to .bg-cream sections */
+    .bg-cream {
+      background-color: #faf6ef !important;
+      color: #1b1410;
+    }
+    .bg-cream .text-white { color: rgb(27 20 16) !important; }
+    .bg-cream .text-white\/95 { color: rgb(27 20 16 / 0.95) !important; }
+    .bg-cream .text-white\/90 { color: rgb(27 20 16 / 0.90) !important; }
+    .bg-cream .text-white\/85 { color: rgb(27 20 16 / 0.85) !important; }
+    .bg-cream .text-white\/80 { color: rgb(27 20 16 / 0.80) !important; }
+    .bg-cream .text-white\/70 { color: rgb(27 20 16 / 0.70) !important; }
+    .bg-cream .text-white\/65 { color: rgb(27 20 16 / 0.65) !important; }
+    .bg-cream .text-white\/60 { color: rgb(27 20 16 / 0.60) !important; }
+    .bg-cream .text-white\/55 { color: rgb(27 20 16 / 0.55) !important; }
+    .bg-cream .text-white\/45 { color: rgb(27 20 16 / 0.45) !important; }
+    .bg-cream .text-white\/40 { color: rgb(27 20 16 / 0.40) !important; }
+    .bg-cream .liquid-glass {
+      background: rgba(255, 252, 244, 0.6) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      border: 1px solid rgba(139, 94, 60, 0.12) !important;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 4px 24px rgba(26, 18, 12, 0.05) !important;
+    }
+    .bg-cream .liquid-glass::before { display: none !important; }
+    .bg-cream .liquid-glass-strong {
+      background: rgba(255, 252, 244, 0.88) !important;
+      backdrop-filter: blur(20px) !important;
+      -webkit-backdrop-filter: blur(20px) !important;
+      border: 1px solid rgba(139, 94, 60, 0.14) !important;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset, 0 4px 32px rgba(26, 18, 12, 0.08) !important;
+    }
+    .bg-cream .liquid-glass-strong::before { display: none !important; }
+    .bg-cream .bg-white {
+      background-color: #1a120c !important;
+      color: #faf6ef !important;
+    }
+    .bg-cream .text-black { color: #faf6ef !important; }
+    .bg-cream .border-white\/10 { border-color: rgba(26, 18, 12, 0.10) !important; }
+    .bg-cream .border-white\/5 { border-color: rgba(26, 18, 12, 0.05) !important; }
+    .bg-cream .divide-white\/10 > * + * { border-color: rgba(26, 18, 12, 0.10) !important; }
+
+    .liquid-glass {
+      background: rgba(255,255,255,0.01);
+      background-blend-mode: luminosity;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: none;
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.10);
+      position: relative;
+      overflow: hidden;
+    }
+    .liquid-glass::before {
+      content: "";
+      position: absolute; inset: 0;
+      border-radius: inherit;
+      padding: 1.4px;
+      background: linear-gradient(180deg,
+        rgba(245,230,200,0.42) 0%,
+        rgba(245,230,200,0.13) 20%,
+        rgba(245,230,200,0) 40%,
+        rgba(245,230,200,0) 60%,
+        rgba(245,230,200,0.13) 80%,
+        rgba(245,230,200,0.42) 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+      pointer-events: none;
+    }
+    .liquid-glass-strong {
+      background: rgba(255,255,255,0.01);
+      background-blend-mode: luminosity;
+      backdrop-filter: blur(50px);
+      -webkit-backdrop-filter: blur(50px);
+      border: none;
+      box-shadow: 4px 4px 4px rgba(0,0,0,0.05), inset 0 1px 1px rgba(255,255,255,0.15);
+      position: relative;
+      overflow: hidden;
+    }
+    .liquid-glass-strong::before {
+      content: "";
+      position: absolute; inset: 0;
+      border-radius: inherit;
+      padding: 1.4px;
+      background: linear-gradient(180deg,
+        rgba(245,230,200,0.48) 0%,
+        rgba(245,230,200,0.18) 20%,
+        rgba(245,230,200,0) 40%,
+        rgba(245,230,200,0) 60%,
+        rgba(245,230,200,0.18) 80%,
+        rgba(245,230,200,0.48) 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel" data-presets="env,react">
+    const { motion } = window.Motion;
+    const { useEffect, useRef, useState } = React;
+
+    const HERO_VIDEO = "./memory_frame_demo.mp4";
+
+    /* ============== BlurText ============== */
+    function BlurText({ text, className }) {
+      const [visible, setVisible] = useState(false);
+      const ref = useRef(null);
+      useEffect(() => {
+        const el = ref.current;
+        if (!el) return;
+        const obs = new IntersectionObserver(
+          (entries) => entries.forEach((e) => { if (e.isIntersecting) setVisible(true); }),
+          { threshold: 0.1 }
+        );
+        obs.observe(el);
+        return () => obs.disconnect();
+      }, []);
+
+      const words = text.split(" ");
+      return (
+        <p ref={ref} className={className} style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", rowGap: "0.1em" }}>
+          {words.map((w, i) => (
+            <motion.span
+              key={i}
+              initial={{ filter: "blur(10px)", opacity: 0, y: 50 }}
+              animate={visible ? {
+                filter: ["blur(10px)", "blur(5px)", "blur(0px)"],
+                opacity: [0, 0.5, 1],
+                y: [50, -5, 0],
+              } : {}}
+              transition={{ duration: 0.7, times: [0, 0.5, 1], ease: "easeOut", delay: (i * 100) / 1000 }}
+              style={{ display: "inline-block", marginRight: "0.28em" }}
+            >
+              {w}
+            </motion.span>
+          ))}
+        </p>
+      );
+    }
+
+    /* ============== Icons ============== */
+    const ArrowUpRight = ({ className = "h-5 w-5" }) => (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <path d="M7 17L17 7"/><path d="M7 7h10v10"/>
+      </svg>
+    );
+    const Play = ({ className = "h-4 w-4" }) => (
+      <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+        <polygon points="6 4 20 12 6 20 6 4"/>
+      </svg>
+    );
+    const SpeakerOff = ({ className = "h-5 w-5" }) => (
+      <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+        <path d="M3 9v6h4l5 5V4L7 9H3zm13.59 3L19 14.41 17.59 16 15.18 13.59 12.77 16 11.36 14.59 13.77 12.18 11.36 9.77 12.77 8.36 15.18 10.77 17.59 8.36 19 9.77 16.59 12z"/>
+      </svg>
+    );
+    const SpeakerOn = ({ className = "h-5 w-5" }) => (
+      <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+      </svg>
+    );
+
+    const ChevronDown = ({ className = "h-4 w-4" }) => (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className={className}>
+        <path d="M6 9l6 6 6-6"/>
+      </svg>
+    );
+
+    const MaterialIcon = ({ d, className = "h-6 w-6" }) => (
+      <svg viewBox="0 0 24 24" fill="currentColor" className={className}><path d={d}/></svg>
+    );
+    const CALENDAR_PATH = "M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z";
+    const MIC_PATH = "M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.52 14.2 14.47 16 12 16s-4.52-1.8-4.93-4.15c-.08-.49-.49-.85-.98-.85-.61 0-1.09.54-1 1.14.49 3 2.89 5.35 5.91 5.78V20c0 .55.45 1 1 1s1-.45 1-1v-2.08c3.02-.43 5.42-2.78 5.91-5.78.1-.6-.39-1.14-1-1.14z";
+    const USERS_PATH = "M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z";
+    const FILTER_PATH = "M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z";
+    const ARCHIVE_PATH = "M20.54 5.23l-1.39-1.68C18.88 3.21 18.47 3 18 3H6c-.47 0-.88.21-1.16.55L3.46 5.23C3.17 5.57 3 6.02 3 6.5V19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6.5c0-.48-.17-.93-.46-1.27zM12 17.5L6.5 12H10v-2h4v2h3.5L12 17.5zM5.12 5l.81-1h12l.94 1H5.12z";
+    const CLOCK_PATH = "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z";
+    const SHIELD_PATH = "M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z";
+
+    /* ============== HERO ============== */
+    function Hero() {
+      const videoRef = useRef(null);
+      const [muted, setMuted] = useState(true);
+      const [showHint, setShowHint] = useState(true);
+
+      useEffect(() => {
+        const t = setTimeout(() => setShowHint(false), 6000);
+        return () => clearTimeout(t);
+      }, []);
+
+      const toggleMute = () => {
+        const v = videoRef.current;
+        if (!v) return;
+        const newMuted = !muted;
+        v.muted = newMuted;
+        if (!newMuted && v.paused) v.play().catch(() => {});
+        setMuted(newMuted);
+        setShowHint(false);
+      };
+
+      return (
+        <section className="relative min-h-screen overflow-hidden bg-black">
+          <video
+            ref={videoRef}
+            src={HERO_VIDEO}
+            poster="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3CradialGradient id='a' cx='20%25' cy='25%25' r='55%25'%3E%3Cstop offset='0%25' stop-color='%23dcaf69' stop-opacity='.30'/%3E%3Cstop offset='100%25' stop-color='%231a120c' stop-opacity='0'/%3E%3C/radialGradient%3E%3CradialGradient id='b' cx='80%25' cy='78%25' r='60%25'%3E%3Cstop offset='0%25' stop-color='%23b0843e' stop-opacity='.24'/%3E%3Cstop offset='100%25' stop-color='%231a120c' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='1920' height='1080' fill='%231a120c'/%3E%3Crect width='1920' height='1080' fill='url(%23a)'/%3E%3Crect width='1920' height='1080' fill='url(%23b)'/%3E%3Ctext x='960' y='540' font-family='Georgia, serif' font-style='italic' font-size='110' fill='%23faf6ef' fill-opacity='.78' text-anchor='middle' dominant-baseline='middle'%3EMemory Frame%3C/text%3E%3C/svg%3E"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            className="absolute inset-0 w-full h-full object-cover object-top z-0"
+          />
+
+          {/* Navbar */}
+          <nav className="fixed top-4 left-0 right-0 z-50 flex items-center justify-between px-8 lg:px-16">
+            <div className="bg-[#faf6ef] w-12 h-12 rounded-full flex items-center justify-center shadow-md">
+              <span className="font-heading italic text-2xl text-[#1a120c]">m</span>
+            </div>
+            <a href="#reserve" className="bg-[#1a120c] text-[#faf6ef] rounded-full px-5 py-2.5 text-sm font-medium flex items-center gap-2 whitespace-nowrap hover:bg-[#2a1f17] transition-colors shadow-md">
+              Reserve for $1 <ArrowUpRight className="h-4 w-4"/>
+            </a>
+          </nav>
+
+          {/* Sound toggle — browser autoplay policy requires user gesture for audio */}
+          <motion.button
+            onClick={toggleMute}
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.2, ease: "easeOut" }}
+            aria-label={muted ? "Tap to play with sound" : "Mute video"}
+            className="absolute z-20 right-6 md:right-12 bottom-28 liquid-glass-strong rounded-full flex items-center justify-center text-white font-medium hover:scale-105 transition-all duration-300 overflow-hidden cursor-pointer"
+            style={{ padding: showHint && muted ? "12px 22px" : "14px" }}
+          >
+            <span className="relative z-10 flex items-center gap-2">
+              {muted ? <SpeakerOff className="h-5 w-5"/> : <SpeakerOn className="h-5 w-5"/>}
+              {showHint && muted && (
+                <span className="text-sm font-medium whitespace-nowrap">Tap for sound</span>
+              )}
+            </span>
+          </motion.button>
+
+          {/* Scroll cue */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, y: [0, 8, 0] }}
+            transition={{ opacity: { duration: 1, delay: 1.5 }, y: { duration: 2, repeat: Infinity, ease: "easeInOut" } }}
+            className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 pointer-events-none"
+          >
+            <span className="text-[10px] font-body font-light tracking-[0.3em] uppercase text-white/65">Scroll</span>
+            <ChevronDown className="h-5 w-5 text-white/65" />
+          </motion.div>
+        </section>
+      );
+    }
+
+    /* ============== INTRO ============== */
+    function Intro() {
+      const easeOut = { ease: "easeOut" };
+      return (
+        <section className="relative bg-cream overflow-hidden">
+          <div className="relative z-10 max-w-7xl mx-auto px-6 py-24 md:py-32 flex flex-col items-center text-center">
+            <motion.div
+              initial={{ filter: "blur(10px)", opacity: 0, y: 20 }}
+              whileInView={{ filter: "blur(0px)", opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.1, ...easeOut }}
+              className="liquid-glass rounded-full pl-1.5 pr-3 py-1 flex items-center gap-2"
+            >
+              <span className="bg-[#f5e6c8] text-[#1a120c] rounded-full px-3 py-1 text-xs font-semibold relative z-10">New</span>
+              <span className="text-sm text-white/90 relative z-10">First production run · Reservations open</span>
+            </motion.div>
+
+            <div className="mt-8">
+              <BlurText
+                text="The Frame That Knows Your Family"
+                className="text-5xl md:text-7xl lg:text-[5.5rem] font-heading italic text-white leading-[0.95] max-w-5xl tracking-[-2px]"
+              />
+            </div>
+
+            <motion.p
+              initial={{ filter: "blur(10px)", opacity: 0, y: 20 }}
+              whileInView={{ filter: "blur(0px)", opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.5, ...easeOut }}
+              className="mt-6 text-base md:text-lg text-white/85 max-w-2xl font-body font-light leading-relaxed"
+            >
+              A wood-framed display for your mom&rsquo;s living room. She talks to it. It listens. It shows her the photos that matter today &mdash; on the device, no app, no monthly fee, no cloud.
+            </motion.p>
+
+            <motion.div
+              initial={{ filter: "blur(10px)", opacity: 0, y: 20 }}
+              whileInView={{ filter: "blur(0px)", opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.7, ...easeOut }}
+              className="flex items-center justify-center mt-10"
+            >
+              <a href="#reserve" className="liquid-glass-strong rounded-full px-6 py-3 text-sm font-medium text-white flex items-center gap-2">
+                <span className="relative z-10 flex items-center gap-2">Reserve for $1 <ArrowUpRight className="h-5 w-5"/></span>
+              </a>
+            </motion.div>
+
+            <motion.div
+              initial={{ filter: "blur(10px)", opacity: 0, y: 20 }}
+              whileInView={{ filter: "blur(0px)", opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.9, ...easeOut }}
+              className="flex flex-col sm:flex-row items-stretch gap-4 mt-12 w-full max-w-md"
+            >
+              <div className="liquid-glass p-5 flex-1 rounded-[1.25rem]">
+                <div className="relative z-10">
+                  <MaterialIcon d={CLOCK_PATH} className="h-7 w-7 text-white"/>
+                  <div className="text-4xl font-heading italic text-white tracking-[-1px] leading-none mt-3">$399</div>
+                  <div className="text-xs text-white/80 font-body font-light mt-2">From — One price, no subscription, ever.</div>
+                </div>
+              </div>
+              <div className="liquid-glass p-5 flex-1 rounded-[1.25rem]">
+                <div className="relative z-10">
+                  <MaterialIcon d={SHIELD_PATH} className="h-7 w-7 text-white"/>
+                  <div className="text-4xl font-heading italic text-white tracking-[-1px] leading-none mt-3">On-device</div>
+                  <div className="text-xs text-white/80 font-body font-light mt-2">Photos and faces never leave the frame.</div>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.8, delay: 1.1, ...easeOut }}
+              className="flex flex-col items-center gap-6 mt-16"
+            >
+              <div className="liquid-glass rounded-full px-3.5 py-1 text-xs font-medium text-white relative">
+                <span className="relative z-10">Made by Mira · A small studio for your family&rsquo;s living room</span>
+              </div>
+              <div className="flex items-center gap-8 md:gap-16 text-2xl md:text-3xl font-heading italic text-white/85 tracking-tight">
+                <span>Walnut</span>
+                <span>Oak</span>
+                <span>Brass</span>
+                <span>Glass</span>
+                <span>Quiet</span>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      );
+    }
+
+    /* ============== DEMO ============== */
+    function Demo() {
+      const [playing, setPlaying] = useState(false);
+      const ref = useRef(null);
+
+      const togglePlay = () => {
+        const v = ref.current;
+        if (!v) return;
+        if (v.paused) {
+          v.play();
+          setPlaying(true);
+        } else {
+          v.pause();
+          setPlaying(false);
+        }
+      };
+
+      return (
+        <section id="demo" className="relative bg-cream px-4 md:px-10 lg:px-20 py-24 md:py-32">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-end justify-between flex-wrap gap-6 mb-10">
+              <div>
+                <p className="text-sm font-body text-white/60 mb-4">// Watch</p>
+                <h2 className="font-heading italic text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.9] tracking-[-3px] max-w-3xl">
+                  See it in your<br/>mom's living room.
+                </h2>
+              </div>
+              <p className="text-sm md:text-base text-white/65 font-body font-light max-w-sm">
+                Sixty seconds. No music spike. Watch what the frame actually does on a Tuesday afternoon.
+              </p>
+            </div>
+
+            <div className="relative liquid-glass rounded-[1.5rem] md:rounded-[2rem] overflow-hidden">
+              <div className="relative z-10">
+                <video
+                  ref={ref}
+                  src="./memory_frame_demo.mp4"
+                  controls
+                  playsInline
+                  preload="metadata"
+                  onPlay={() => setPlaying(true)}
+                  onPause={() => setPlaying(false)}
+                  className="w-full block"
+                  style={{ aspectRatio: "16 / 9", objectFit: "cover", background: "#0a0a0a" }}
+                />
+                {!playing && (
+                  <button
+                    onClick={togglePlay}
+                    aria-label="Play demo"
+                    className="absolute inset-0 flex items-center justify-center group"
+                    style={{ background: "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.45) 100%)" }}
+                  >
+                    <div className="liquid-glass-strong w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center transition-transform group-hover:scale-105">
+                      <Play className="h-7 w-7 md:h-8 md:w-8 text-white relative z-10" />
+                    </div>
+                    <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10 text-left">
+                      <div className="liquid-glass rounded-full px-3 py-1 inline-flex items-center gap-2 text-xs font-medium text-white">
+                        <span className="relative z-10 inline-flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#B0843E]"></span>
+                          Memory Frame · 60-second demo
+                        </span>
+                      </div>
+                    </div>
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    /* ============== CAPABILITIES ============== */
+    function CapCard({ c, i }) {
+      const [idx, setIdx] = useState(0);
+      return (
+        <motion.div
+          initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.7, delay: i * 0.08, ease: "easeOut" }}
+          className="liquid-glass-strong rounded-[1.25rem] flex flex-col overflow-hidden hover:scale-[1.02] hover:shadow-[0_8px_40px_rgba(176,132,62,0.18)] transition-all duration-300"
+        >
+          {/* Product render carousel — wired in 2026-05-06 round 11 */}
+          <div className="aspect-[16/10] relative overflow-hidden">
+            {c.images.map((src, j) => (
+              <img
+                key={src}
+                src={src}
+                alt={c.title}
+                loading="lazy"
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${j === idx ? "opacity-100" : "opacity-0"}`}
+              />
+            ))}
+            {c.images.length > 1 && (
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+                {c.images.map((_, j) => (
+                  <button
+                    key={j}
+                    onClick={() => setIdx(j)}
+                    aria-label={`Show image ${j + 1}`}
+                    className={`h-1.5 rounded-full transition-all ${j === idx ? "bg-white w-4" : "bg-white/50 hover:bg-white/80 w-1.5"}`}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="relative z-10 flex flex-col flex-1 p-6">
+            <div className="flex flex-wrap gap-1.5 mb-4">
+              {c.tags.map((t) => (
+                <span key={t} className="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 font-body whitespace-nowrap">
+                  <span className="relative z-10">{t}</span>
+                </span>
+              ))}
+            </div>
+            <div className="mt-auto">
+              <h3 className="font-heading italic text-white text-3xl md:text-4xl tracking-[-1px] leading-none">{c.title}</h3>
+              <p className="mt-3 text-sm text-white/90 font-body font-light leading-snug max-w-[36ch]">{c.body}</p>
+            </div>
+          </div>
+        </motion.div>
+      );
+    }
+
+    function Capabilities() {
+      const cards = [
+        {
+          images: ["./img/cap-1-date.jpg", "./img/cap-1-date-alt.jpg"],
+          icon: CALENDAR_PATH,
+          tags: ["Birthday-aware", "Anniversary-aware", "Today-relevant", "Year-by-year"],
+          title: "Date awareness",
+          body: "Memory Frame knows what today is. Emma's 10th birthday surfaces every birthday photo since she was one. Your dad's anniversary surfaces the church photo. Today, every day."
+        },
+        {
+          images: ["./img/cap-2-voice.jpg", "./img/cap-2-voice-alt.jpg"],
+          icon: MIC_PATH,
+          tags: ["No app", "No remote", "Voice-activated", "On-device"],
+          title: "Voice query",
+          body: "Mom says, out loud, “Show me when the kids were little.” The frame answers. The mic activates only when she presses the side button — and what she says never leaves the frame."
+        },
+        {
+          images: ["./img/cap-3-recognition.jpg", "./img/cap-3-recognition-alt.jpg"],
+          icon: USERS_PATH,
+          tags: ["Auto-tagging", "Multi-person", "Private", "No cloud"],
+          title: "Family recognition",
+          body: "Tag once. The frame learns Tommy, Grandpa Robert, Sarah at her wedding. New photos arrive sorted, on the chip in the wall, never on a server."
+        },
+        {
+          images: ["./img/cap-4-curation.jpg", "./img/cap-4-curation-alt.jpg"],
+          icon: FILTER_PATH,
+          tags: ["200 to 5", "Best-moments", "Auto-pick", "Quality-aware"],
+          title: "Smart curation",
+          body: "Two hundred vacation photos in. Five that matter out — your dad laughing, the kids in the ocean, the one nobody noticed but is now your favorite. Mom sees the trip, not the noise."
+        },
+        {
+          images: ["./img/cap-5-story.jpg", "./img/cap-5-story-alt.jpg"],
+          icon: ARCHIVE_PATH,
+          tags: ["Voice memos", "Auto-transcribe", "Heirloom", "Generational"],
+          title: "Story preservation",
+          body: "Dad tells the story of how he met Mom in 1968. The frame transcribes it, files it next to the church photo. Years from now, your kids press a button and hear his voice."
+        }
+      ];
+
+      return (
+        <section id="scenes" className="relative min-h-screen overflow-hidden bg-black">
+          {/* Atmospheric warm gradient bg — replaces stock video for cleaner brand feel */}
+          <div className="absolute inset-0 z-0" style={{
+            background: `
+              radial-gradient(ellipse 80% 60% at 18% 22%, rgba(220, 175, 105, 0.24) 0%, transparent 55%),
+              radial-gradient(ellipse 70% 55% at 82% 78%, rgba(176, 132, 62, 0.20) 0%, transparent 60%),
+              radial-gradient(ellipse 110% 80% at 50% 105%, rgba(67, 38, 19, 0.45) 0%, transparent 70%),
+              linear-gradient(180deg, #1a120c 0%, #2a1f17 50%, #1a120c 100%)
+            `
+          }} />
+          {/* Subtle film grain for tactile warmth */}
+          <div className="absolute inset-0 z-[1] pointer-events-none opacity-[0.06]" style={{
+            backgroundImage: `url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E")`
+          }} />
+
+          <div className="relative z-10 px-8 md:px-16 lg:px-20 pt-24 pb-16 flex flex-col min-h-screen">
+            <div>
+              <p className="text-sm font-body text-white/80 mb-6">// Capabilities</p>
+              <h2 className="font-heading italic text-white text-6xl md:text-7xl lg:text-[6rem] leading-[0.9] tracking-[-3px]">
+                Memory<br/>made present
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+              {cards.map((c, i) => (
+                <CapCard key={c.title} c={c} i={i} />
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    /* ============== PROBLEM ============== */
+    function Problem() {
+      const cards = [
+        {
+          title: "She set it on the counter.",
+          body: "Random pictures with no context. Disney three years ago, on a Tuesday in April. By February, it was tucked behind a stack of mail."
+        },
+        {
+          title: "The setup was an app.",
+          body: "Cloud frames assume she'll install, sign in, manage Wi-Fi. She won't. The Wi-Fi rotated — and you found out at Thanksgiving."
+        },
+        {
+          title: "Then the email came.",
+          body: "Skylight wants $49/year for video. Nixplay shrunk free cloud and now wants $30/year. You bought the frame; they keep selling you the parts you thought you owned."
+        }
+      ];
+      return (
+        <section className="relative bg-cream px-8 md:px-16 lg:px-20 py-32">
+          <div className="max-w-6xl mx-auto">
+            <p className="text-sm font-body text-white/60 mb-6">// The frame she didn't use</p>
+            <h2 className="font-heading italic text-white text-5xl md:text-6xl lg:text-[5rem] leading-[0.9] tracking-[-3px] max-w-4xl">
+              Why most frames<br/>end up face-down.
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+              {cards.map((c, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
+                  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.7, delay: i * 0.08, ease: "easeOut" }}
+                  className="liquid-glass rounded-[1.25rem] p-7 hover:-translate-y-1 hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="relative z-10">
+                    <h3 className="font-heading italic text-white text-2xl md:text-3xl tracking-[-1px] leading-tight">{c.title}</h3>
+                    <p className="mt-3 text-sm text-white/80 font-body font-light leading-snug">{c.body}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    /* ============== THINKING OF YOU ============== */
+    function ThinkingOfYou() {
+      return (
+        <section className="relative bg-black overflow-hidden">
+          <div className="relative px-8 py-32 md:py-40 text-center">
+            <div
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+              style={{ width: 800, height: 800, background: "radial-gradient(circle, rgba(176,132,62,0.18) 0%, transparent 60%)" }}
+            />
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
+              className="relative w-32 h-32 mx-auto mb-12"
+            >
+              <svg viewBox="0 0 120 120" className="w-full h-full">
+                <defs>
+                  <radialGradient id="bbHalo" cx="0.5" cy="0.5" r="0.5">
+                    <stop offset="0%" stopColor="rgba(220,170,80,0.35)"/>
+                    <stop offset="60%" stopColor="rgba(220,170,80,0.10)"/>
+                    <stop offset="100%" stopColor="rgba(220,170,80,0)"/>
+                  </radialGradient>
+                  <radialGradient id="bbWalnut" cx="0.5" cy="0.4" r="0.7">
+                    <stop offset="0%" stopColor="#5C3F25"/>
+                    <stop offset="55%" stopColor="#3d2814"/>
+                    <stop offset="100%" stopColor="#1f1208"/>
+                  </radialGradient>
+                  <linearGradient id="bbBezel" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#0c0805"/>
+                    <stop offset="100%" stopColor="#1f1208"/>
+                  </linearGradient>
+                  <radialGradient id="bbBrass" cx="0.32" cy="0.28" r="0.78">
+                    <stop offset="0%" stopColor="#FFEFB8"/>
+                    <stop offset="22%" stopColor="#F4D285"/>
+                    <stop offset="50%" stopColor="#D4A14C"/>
+                    <stop offset="78%" stopColor="#A07129"/>
+                    <stop offset="100%" stopColor="#3D2614"/>
+                  </radialGradient>
+                  <radialGradient id="bbPress" cx="0.5" cy="0.5" r="0.5">
+                    <stop offset="78%" stopColor="rgba(0,0,0,0)"/>
+                    <stop offset="100%" stopColor="rgba(0,0,0,0.5)"/>
+                  </radialGradient>
+                  <radialGradient id="bbHi" cx="0.5" cy="0.3" r="0.4">
+                    <stop offset="0%" stopColor="rgba(255,247,210,0.85)"/>
+                    <stop offset="60%" stopColor="rgba(255,247,210,0.15)"/>
+                    <stop offset="100%" stopColor="rgba(255,247,210,0)"/>
+                  </radialGradient>
+                  <linearGradient id="bbRefl" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="rgba(255,210,140,0)"/>
+                    <stop offset="50%" stopColor="rgba(255,210,140,0.18)"/>
+                    <stop offset="100%" stopColor="rgba(255,210,140,0)"/>
+                  </linearGradient>
+                </defs>
+                <circle cx="60" cy="60" r="58" fill="url(#bbHalo)"/>
+                <circle cx="60" cy="60" r="50" fill="url(#bbWalnut)"/>
+                <circle cx="60" cy="60" r="42" fill="url(#bbBezel)"/>
+                <circle cx="60" cy="60" r="38" fill="url(#bbBrass)"/>
+                <ellipse cx="60" cy="60" rx="38" ry="12" fill="url(#bbRefl)"/>
+                <circle cx="60" cy="60" r="38" fill="url(#bbPress)"/>
+                <ellipse cx="50" cy="48" rx="18" ry="14" fill="url(#bbHi)"/>
+                <ellipse cx="46" cy="46" rx="6" ry="3.5" fill="rgba(255,247,210,0.75)" transform="rotate(-25 46 46)"/>
+                <circle cx="60" cy="60" r="42" fill="none" stroke="rgba(220,170,80,0.25)" strokeWidth="0.5"/>
+              </svg>
+            </motion.div>
+
+            <h2 className="relative font-heading italic text-white text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-[-2px] max-w-3xl mx-auto">
+              And one quiet button — for the days she&rsquo;s thinking of you.
+            </h2>
+
+            <p className="relative mt-8 text-base md:text-lg text-white/80 font-body font-light max-w-2xl mx-auto leading-relaxed">
+              On the bottom-right of the frame, there is a small brass button. No label. No screen. Mom presses it. Your phone lights up softly: <em className="font-heading italic text-white">&ldquo;Mom is thinking of you.&rdquo;</em> Nothing more.
+            </p>
+          </div>
+        </section>
+      );
+    }
+
+    /* ============== MIRA ============== */
+    function Mira() {
+      return (
+        <section className="relative bg-cream px-8 md:px-16 lg:px-20 py-32">
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="text-sm font-body text-white/60 mb-6">// Made by</p>
+            <h2 className="font-heading italic text-white text-6xl md:text-7xl tracking-[-2px] leading-none">Mira.</h2>
+            <p className="mt-6 text-base text-white/70 font-body font-light italic max-w-xl mx-auto">A small studio that watched their own parents put a frame face-down.</p>
+
+            <div className="mt-14 text-left space-y-6 text-white/85 font-body font-light leading-relaxed text-base">
+              <p>Memory Frame started in a living room — not a strategy deck. Every choice traces back to one question: <em className="font-heading italic text-white">what would actually make my mom pick this up and feel something?</em></p>
+              <p>We deliberately didn't add a camera. We deliberately didn't add an always-listening microphone — the only mic activates when she presses the side button, and what she says never leaves the frame. We deliberately didn't add tracking. We deliberately didn't add a cloud. We didn't add a subscription, and we never will.</p>
+              <p>We added wood. We added brass. We added an on-device chip that took us longer to build than a cloud version would have. And we added the discipline to stop adding things.</p>
+            </div>
+
+            <p className="mt-12 font-heading italic text-2xl text-white/70">— Mira</p>
+          </div>
+        </section>
+      );
+    }
+
+    /* ============== PRICING ============== */
+    function Pricing() {
+      const cards = [
+        { name: "For Mom", image: "./img/pricing-mom.jpg", size: "Memory Frame 10″", price: "$399", note: "One-time. Walnut, oak, or matte black.", body: "The original. One frame for your mom (or dad). Fits a side table or shelf.", featured: true },
+        { name: "For Both Sides", image: "./img/pricing-both.jpg", size: "Two Memory Frames 10″", price: "$729", note: "Save $69 on the pair.", body: "One for your parents. One for your in-laws. Or one each for two siblings to gift together." },
+        { name: "For the Family Wall", image: "./img/pricing-wall.jpg", size: "Memory Frame 15″ Premium", price: "$699", note: "Hand-finished walnut.", body: "Furniture-grade. Ambient light sensor, premium matte glass. The piece that lives on the mantle." },
+      ];
+      return (
+        <section id="pricing" className="relative bg-cream px-8 md:px-16 lg:px-20 py-32">
+          <div className="max-w-6xl mx-auto">
+            <p className="text-sm font-body text-white/60 mb-6">// Pricing</p>
+            <h2 className="font-heading italic text-white text-5xl md:text-6xl lg:text-[5rem] leading-[0.95] tracking-[-3px] max-w-3xl">
+              One price.<br/>No subscription, ever.
+            </h2>
+            <p className="mt-4 text-base text-white/70 font-body font-light max-w-xl">We charge once. Then we leave you alone — except to ship the frame.</p>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-14">
+              {cards.map((c, i) => (
+                <motion.div
+                  key={c.name}
+                  initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
+                  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.6, delay: i * 0.08, ease: "easeOut" }}
+                  className={`${c.featured ? "liquid-glass-strong" : "liquid-glass"} rounded-[1.5rem] flex flex-col relative overflow-hidden hover:-translate-y-1 hover:shadow-2xl transition-all duration-300`}
+                >
+                  {/* Product render — wired in 2026-05-06 */}
+                  <div className="aspect-[4/3] relative overflow-hidden">
+                    <img src={c.image} alt={c.name} loading="lazy" className="w-full h-full object-cover" />
+                    {c.featured && (
+                      <div className="absolute top-3 left-3 bg-[#1a120c] text-[#faf6ef] px-3 py-1 rounded-full text-[10px] font-semibold tracking-[0.08em] uppercase">Most reserved</div>
+                    )}
+                  </div>
+                  <div className="relative z-10 flex flex-col flex-1 p-7">
+                    <div className="text-2xl font-heading italic text-white tracking-[-0.5px]">{c.name}</div>
+                    <div className="text-[11px] uppercase tracking-[0.12em] text-white/55 mt-1 mb-6 font-body">{c.size}</div>
+                    <div className="font-heading italic text-white text-6xl tracking-[-2px] leading-none">{c.price}</div>
+                    <div className="text-xs text-white/55 mt-2 font-body font-light">{c.note}</div>
+                    <p className="mt-6 text-sm text-white/85 font-body font-light leading-snug flex-1">{c.body}</p>
+                    <a href="#reserve" className="mt-6 bg-white text-black rounded-full px-4 py-2.5 text-sm font-medium flex items-center justify-center gap-2 self-stretch">
+                      Reserve for $1 <ArrowUpRight className="h-4 w-4"/>
+                    </a>
+                    <p className="mt-3 text-[11px] text-white/55 text-center font-body font-light leading-snug px-2">
+                      $1 hold → ship date confirmed by email → full price charged when frame ships → 30-day refund
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="mt-16 liquid-glass-strong rounded-[1.5rem] overflow-hidden">
+              <div className="relative z-10 p-6 md:p-10">
+                <p className="text-sm font-body text-white/60 mb-6">// What’s inside every frame</p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10">
+                  <div>
+                    <div className="text-[10px] uppercase tracking-[0.18em] text-white/55 font-body">Display</div>
+                    <div className="text-2xl md:text-3xl font-heading italic text-white mt-2 leading-none tracking-[-1px]">10.1″ IPS</div>
+                    <div className="text-xs text-white/70 mt-2 font-body font-light leading-snug">1920×1200 · matte anti-reflective glass</div>
+                  </div>
+                  <div>
+                    <div className="text-[10px] uppercase tracking-[0.18em] text-white/55 font-body">Storage</div>
+                    <div className="text-2xl md:text-3xl font-heading italic text-white mt-2 leading-none tracking-[-1px]">64 GB</div>
+                    <div className="text-xs text-white/70 mt-2 font-body font-light leading-snug">≈ 50,000 photos locally · no cloud</div>
+                  </div>
+                  <div>
+                    <div className="text-[10px] uppercase tracking-[0.18em] text-white/55 font-body">AI Chip</div>
+                    <div className="text-2xl md:text-3xl font-heading italic text-white mt-2 leading-none tracking-[-1px]">On-device NPU</div>
+                    <div className="text-xs text-white/70 mt-2 font-body font-light leading-snug">All AI runs locally · no telemetry</div>
+                  </div>
+                  <div>
+                    <div className="text-[10px] uppercase tracking-[0.18em] text-white/55 font-body">Build</div>
+                    <div className="text-2xl md:text-3xl font-heading italic text-white mt-2 leading-none tracking-[-1px]">Wood + Brass</div>
+                    <div className="text-xs text-white/70 mt-2 font-body font-light leading-snug">Walnut, oak, or matte black · brass button</div>
+                  </div>
+                </div>
+                <div className="mt-8 pt-6 border-t border-white/10 text-xs text-white/60 font-body font-light leading-relaxed">
+                  Setup ≈ 90 seconds with your phone, one-time. USB-C powered. 2-year warranty. Ambient light + presence sensors. No subscription, ever.
+                </div>
+                <div className="mt-3 text-[11px] text-white/40 font-body font-light italic">
+                  15″ Premium adds: 2560×1600 display · ambient light auto-dimming · hand-finished walnut.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    /* ============== FAQ ============== */
+    function FAQ() {
+      const items = [
+        ["My mom can't do Wi-Fi. She'll never set this up.", "You set up the frame with your phone in about 90 seconds before you mail it — your mom only ever plugs it in. We can also do the setup for you for free; just tell us your parent's name and Wi-Fi network on the order form, and the frame arrives ready to plug in."],
+        ["Will this work across iPhone, Android, and email?", "Yes. Memory Frame syncs over Wi-Fi from any phone or computer. Your siblings tap a private link you share with them — no app store, no account creation, no learning curve."],
+        ["What if Mira shuts down?", "The AI is on a chip inside the frame, not in the cloud. No cloud means no service to lose. The frame your mom has on Year 5 looks exactly like the frame she has on Year 1, even if our website is gone tomorrow."],
+        ["What if my parent has dementia?", "Memory Frame may not be the right product for moderate or severe dementia. Recognition-based displays can be unsettling. Please reach out before reserving — we'll talk it through honestly with you."],
+        ["Who can see my photos?", "Only the people you share the photo link with. No one at Mira. No AI vendor. No cloud provider. After Wi-Fi setup, the frame can be put in airplane mode and the AI keeps working."],
+        ["When will it ship?", "We're finalizing our first production run. Your ship date will be confirmed by email before your card is charged. The first run is limited; reserving now locks in your spot and the launch price."],
+      ];
+      const [open, setOpen] = useState(0);
+      return (
+        <section className="relative bg-cream px-8 md:px-16 lg:px-20 py-32">
+          <div className="max-w-3xl mx-auto">
+            <p className="text-sm font-body text-white/60 mb-6">// Honest questions</p>
+            <h2 className="font-heading italic text-white text-5xl md:text-6xl tracking-[-2px] leading-[0.95]">
+              The things you<br/>were going to ask anyway.
+            </h2>
+
+            <div className="mt-12 divide-y divide-white/10 border-t border-white/10">
+              {items.map(([q, a], i) => (
+                <div key={i}>
+                  <button
+                    onClick={() => setOpen(open === i ? -1 : i)}
+                    className="w-full flex items-center justify-between gap-6 py-6 text-left"
+                  >
+                    <span className="text-base md:text-lg font-body font-medium text-white">{q}</span>
+                    <ChevronDown className={`h-5 w-5 text-white/60 shrink-0 transition-transform ${open === i ? "rotate-180" : ""}`} />
+                  </button>
+                  <motion.div
+                    initial={false}
+                    animate={open === i ? { height: "auto", opacity: 1, marginBottom: 24 } : { height: 0, opacity: 0, marginBottom: 0 }}
+                    style={{ overflow: "hidden" }}
+                  >
+                    <p className="text-sm md:text-base text-white/70 font-body font-light leading-relaxed pr-12">{a}</p>
+                  </motion.div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    /* ============== FINAL CTA ============== */
+    function FinalCTA() {
+      return (
+        <section id="reserve" className="relative bg-black overflow-hidden">
+          <div className="relative px-8 py-32 md:py-44 text-center">
+            <div
+              className="absolute top-0 left-1/2 -translate-x-1/2 pointer-events-none"
+              style={{ width: 1000, height: 800, background: "radial-gradient(circle, rgba(176,132,62,0.18) 0%, transparent 60%)" }}
+            />
+
+            <h2 className="relative font-heading italic text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.9] tracking-[-3px] max-w-4xl mx-auto">
+              Reserve a Memory Frame for $1.
+            </h2>
+            <p className="relative mt-6 text-base md:text-lg text-white/80 font-body font-light max-w-xl mx-auto">
+              Refundable. Locks in launch price. Ship date confirmed before charge.
+            </p>
+            <p className="relative mt-2 text-xs text-white/50 font-body font-light max-w-xl mx-auto">
+              $1 holds your spot. Full price ($399&ndash;$729) charged when your frame ships. 30-day refund.
+            </p>
+
+            <form
+              className="relative mt-10 flex items-center gap-2 max-w-md mx-auto liquid-glass rounded-full p-1.5"
+              onSubmit={(e) => { e.preventDefault(); alert("Thanks. We'll email you to confirm your $1 hold."); }}
+              action="#waitlist-handler-todo"
+              data-conversion="reservation_signup"
+            >
+              <input
+                type="email"
+                name="email"
+                required
+                placeholder="Your email"
+                aria-label="Your email"
+                autoComplete="email"
+                className="relative z-10 flex-1 bg-transparent border-0 outline-none px-4 text-sm text-white placeholder-white/45 font-body"
+              />
+              <button type="submit" className="relative z-10 bg-white text-black rounded-full px-5 py-2.5 text-sm font-medium flex items-center gap-2">
+                Reserve $1 <ArrowUpRight className="h-4 w-4"/>
+              </button>
+            </form>
+
+            <p className="relative mt-6 text-xs text-white/55 font-body font-light">
+              Not ready? <a href="#waitlist" className="underline underline-offset-4 text-white">Join the waitlist with email only — no $1 hold.</a>
+            </p>
+          </div>
+        </section>
+      );
+    }
+
+    /* ============== FOOTER ============== */
+    function Footer() {
+      return (
+        <footer className="bg-cream px-8 py-12 text-center text-xs text-white/45 font-body font-light">
+          <div className="text-white/85 font-medium text-sm mb-2">Memory Frame · by Mira</div>
+          <div className="flex justify-center gap-6 mt-3">
+            <a href="#privacy" className="underline underline-offset-4 hover:text-white">Privacy</a>
+            <a href="#terms" className="underline underline-offset-4 hover:text-white">Terms</a>
+            <a href="mailto:hello@mira.studio" className="underline underline-offset-4 hover:text-white">Contact</a>
+          </div>
+          <p className="mt-6 max-w-2xl mx-auto italic text-white/35 leading-relaxed">
+            © 2026 Mira. Memory Frame is currently accepting reservations. Ship dates confirmed by email before your card is charged. Reservations refundable until your frame ships. Specs and pricing subject to change before launch.
+          </p>
+        </footer>
+      );
+    }
+
+    /* ============== APP ============== */
+    function App() {
+      return (
+        <>
+          <Hero />
+          <Intro />
+          <Capabilities />
+          <Problem />
+          <ThinkingOfYou />
+          <Mira />
+          <Pricing />
+          <FAQ />
+          <FinalCTA />
+          <Footer />
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+
+</body>
+</html>
