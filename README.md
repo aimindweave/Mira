@@ -4,7 +4,7 @@ Pre-launch landing page for **Memory Frame**, a wood-framed AI photo display, by
 
 **Status**: Pre-launch · Accepting $1 refundable reservations · Ship date confirmed by email before charge.
 
-**Live**: https://shayla-suen.github.io/Mira/ *(once GitHub Pages is enabled — placeholder; replace with your actual GitHub username path)*
+**Live**: https://aimindweave.github.io/Mira/
 
 ---
 
