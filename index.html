@@ -366,7 +366,7 @@
       const easeOut = { ease: "easeOut" };
       return (
         <section className="relative bg-cream overflow-hidden">
-          <div className="relative z-10 max-w-7xl mx-auto px-6 py-24 md:py-32 flex flex-col items-center text-center">
+          <div className="relative z-10 max-w-7xl mx-auto px-6 py-16 md:py-32 flex flex-col items-center text-center">
             <motion.div
               initial={{ filter: "blur(10px)", opacity: 0, y: 20 }}
               whileInView={{ filter: "blur(0px)", opacity: 1, y: 0 }}
@@ -471,7 +471,7 @@
       };
 
       return (
-        <section id="demo" className="relative bg-cream px-4 md:px-10 lg:px-20 py-24 md:py-32">
+        <section id="demo" className="relative bg-cream px-4 md:px-10 lg:px-20 py-16 md:py-32">
           <div className="max-w-7xl mx-auto">
             <div className="flex items-end justify-between flex-wrap gap-6 mb-10">
               <div>
@@ -616,7 +616,7 @@
       ];
 
       return (
-        <section id="scenes" className="relative min-h-screen overflow-hidden bg-black">
+        <section id="scenes" className="relative md:min-h-screen overflow-hidden bg-black">
           {/* Atmospheric warm gradient bg — replaces stock video for cleaner brand feel */}
           <div className="absolute inset-0 z-0" style={{
             background: `
@@ -631,7 +631,7 @@
             backgroundImage: `url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E")`
           }} />
 
-          <div className="relative z-10 px-8 md:px-16 lg:px-20 pt-24 pb-16 flex flex-col min-h-screen">
+          <div className="relative z-10 px-8 md:px-16 lg:px-20 pt-16 pb-16 md:pt-24 flex flex-col md:min-h-screen">
             <div>
               <p className="text-sm font-body text-white/80 mb-6">// Capabilities</p>
               <h2 className="font-heading italic text-white text-6xl md:text-7xl lg:text-[6rem] leading-[0.9] tracking-[-3px]">
@@ -666,7 +666,7 @@
         }
       ];
       return (
-        <section className="relative bg-cream px-8 md:px-16 lg:px-20 py-32">
+        <section className="relative bg-cream px-8 md:px-16 lg:px-20 py-20 md:py-32">
           <div className="max-w-6xl mx-auto">
             <p className="text-sm font-body text-white/60 mb-6">// The frame she didn't use</p>
             <h2 className="font-heading italic text-white text-5xl md:text-6xl lg:text-[5rem] leading-[0.9] tracking-[-3px] max-w-4xl">
@@ -698,7 +698,7 @@
     function ThinkingOfYou() {
       return (
         <section className="relative bg-black overflow-hidden">
-          <div className="relative px-8 py-32 md:py-40 text-center">
+          <div className="relative px-8 py-20 md:py-40 text-center">
             <div
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
               style={{ width: 800, height: 800, background: "radial-gradient(circle, rgba(176,132,62,0.18) 0%, transparent 60%)" }}
@@ -776,7 +776,7 @@
     /* ============== MIRA ============== */
     function Mira() {
       return (
-        <section className="relative bg-cream px-8 md:px-16 lg:px-20 py-32">
+        <section className="relative bg-cream px-8 md:px-16 lg:px-20 py-20 md:py-32">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-sm font-body text-white/60 mb-6">// Made by</p>
             <h2 className="font-heading italic text-white text-6xl md:text-7xl tracking-[-2px] leading-none">Mira.</h2>
@@ -802,7 +802,7 @@
         { name: "For the Family Wall", image: "./img/pricing-wall.jpg", size: "Memory Frame 15″ Premium", price: "$699", note: "Hand-finished walnut.", body: "Furniture-grade. Ambient light sensor, premium matte glass. The piece that lives on the mantle." },
       ];
       return (
-        <section id="pricing" className="relative bg-cream px-8 md:px-16 lg:px-20 py-32">
+        <section id="pricing" className="relative bg-cream px-8 md:px-16 lg:px-20 py-20 md:py-32">
           <div className="max-w-6xl mx-auto">
             <p className="text-sm font-body text-white/60 mb-6">// Pricing</p>
             <h2 className="font-heading italic text-white text-5xl md:text-6xl lg:text-[5rem] leading-[0.95] tracking-[-3px] max-w-3xl">
@@ -894,7 +894,7 @@
       ];
       const [open, setOpen] = useState(0);
       return (
-        <section className="relative bg-cream px-8 md:px-16 lg:px-20 py-32">
+        <section className="relative bg-cream px-8 md:px-16 lg:px-20 py-20 md:py-32">
           <div className="max-w-3xl mx-auto">
             <p className="text-sm font-body text-white/60 mb-6">// Honest questions</p>
             <h2 className="font-heading italic text-white text-5xl md:text-6xl tracking-[-2px] leading-[0.95]">
@@ -930,7 +930,7 @@
     function FinalCTA() {
       return (
         <section id="reserve" className="relative bg-black overflow-hidden">
-          <div className="relative px-8 py-32 md:py-44 text-center">
+          <div className="relative px-8 py-20 md:py-44 text-center">
             <div
               className="absolute top-0 left-1/2 -translate-x-1/2 pointer-events-none"
               style={{ width: 1000, height: 800, background: "radial-gradient(circle, rgba(176,132,62,0.18) 0%, transparent 60%)" }}
