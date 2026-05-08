@@ -64,10 +64,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
-  <script src="https://unpkg.com/framer-motion@11.11.17/dist/framer-motion.js"></script>
+  <script src="https://unpkg.com/framer-motion@11.11.17/dist/framer-motion.min.js"></script>
 
   <script>
     tailwind.config = {
@@ -224,7 +224,7 @@
 
       const words = text.split(" ");
       return (
-        <p ref={ref} className={className} style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", rowGap: "0.1em" }}>
+        <h1 ref={ref} className={className} style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", rowGap: "0.1em" }}>
           {words.map((w, i) => (
             <motion.span
               key={i}
@@ -240,7 +240,7 @@
               {w}
             </motion.span>
           ))}
-        </p>
+        </h1>
       );
     }
 
@@ -979,6 +979,7 @@
         <footer className="bg-cream px-8 py-12 text-center text-xs text-white/45 font-body font-light">
           <div className="text-white/85 font-medium text-sm mb-2">Memory Frame · by Mira</div>
           <div className="flex justify-center gap-6 mt-3">
+            {/* TODO: replace #privacy / #terms with real /privacy and /terms URLs before launch */}
             <a href="#privacy" className="underline underline-offset-4 hover:text-white">Privacy</a>
             <a href="#terms" className="underline underline-offset-4 hover:text-white">Terms</a>
             <a href="mailto:hello@mira.studio" className="underline underline-offset-4 hover:text-white">Contact</a>
@@ -1010,6 +1011,59 @@
 
     ReactDOM.createRoot(document.getElementById("root")).render(<App />);
   </script>
+
+  <!-- ============================================================
+       AD_PIXEL_SLOT: Meta (Facebook/Instagram)
+       Replace YOUR_PIXEL_ID below with your real Pixel ID before launch.
+       Then uncomment the script block.
+       ============================================================ -->
+  <!--
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'YOUR_PIXEL_ID');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1" alt="" /></noscript>
+  -->
+
+  <!-- ============================================================
+       AD_PIXEL_SLOT: Google Analytics 4
+       Replace YOUR_GA4_ID with your real Measurement ID (G-XXXXXXX).
+       ============================================================ -->
+  <!--
+  <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_GA4_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'YOUR_GA4_ID');
+  </script>
+  -->
+
+  <!-- ============================================================
+       AD_PIXEL_SLOT: TikTok
+       Replace YOUR_TIKTOK_PIXEL_ID with your real Pixel ID.
+       ============================================================ -->
+  <!--
+  <script>
+    !function (w, d, t) {
+      w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"];ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e};ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
+      ttq.load('YOUR_TIKTOK_PIXEL_ID');
+      ttq.page();
+    }(window, document, 'ttq');
+  </script>
+  -->
+
+  <!-- ============================================================
+       COOKIE_CONSENT_BANNER
+       Uncomment + style + wire up before launch (EU GDPR / CA CCPA).
+       ============================================================ -->
+  <!--
+  <div id="cookie-banner" role="region" aria-label="Cookie consent" style="position:fixed;bottom:16px;left:16px;right:16px;max-width:480px;margin:0 auto;background:#1a120c;color:#faf6ef;padding:16px 20px;border-radius:14px;box-shadow:0 8px 28px rgba(0,0,0,.25);font-family:Barlow,sans-serif;font-size:14px;z-index:9999;">
+    <p style="margin:0 0 12px 0;line-height:1.5;">We use minimal cookies to make this page work and to remember your reservation. <a href="#privacy" style="color:#dcaf69;">Learn more</a>.</p>
+    <button onclick="document.getElementById('cookie-banner').remove();localStorage.setItem('cookieConsent','accepted');" style="background:#faf6ef;color:#1a120c;border:0;padding:8px 16px;border-radius:9999px;font-weight:500;cursor:pointer;">OK</button>
+  </div>
+  -->
 
 </body>
 </html>
