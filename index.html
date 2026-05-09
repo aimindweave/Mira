@@ -530,8 +530,8 @@
       const [idx, setIdx] = useState(0);
       return (
         <motion.div
-          initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.7, delay: i * 0.08, ease: "easeOut" }}
           className="liquid-glass-strong rounded-[1.25rem] flex flex-col overflow-hidden hover:scale-[1.02] hover:shadow-[0_8px_40px_rgba(176,132,62,0.18)] transition-all duration-300"
@@ -543,7 +543,10 @@
                 key={src}
                 src={src}
                 alt={c.title}
+                width="1600"
+                height="1000"
                 loading="lazy"
+                decoding="async"
                 className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${j === idx ? "opacity-100" : "opacity-0"}`}
               />
             ))}
@@ -676,8 +679,8 @@
               {cards.map((c, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
-                  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.7, delay: i * 0.08, ease: "easeOut" }}
                   className="liquid-glass rounded-[1.25rem] p-7 hover:-translate-y-1 hover:shadow-xl transition-all duration-300"
@@ -814,15 +817,15 @@
               {cards.map((c, i) => (
                 <motion.div
                   key={c.name}
-                  initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
-                  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.6, delay: i * 0.08, ease: "easeOut" }}
                   className={`${c.featured ? "liquid-glass-strong" : "liquid-glass"} rounded-[1.5rem] flex flex-col relative overflow-hidden hover:-translate-y-1 hover:shadow-2xl transition-all duration-300`}
                 >
                   {/* Product render — wired in 2026-05-06 */}
                   <div className="aspect-[4/3] relative overflow-hidden">
-                    <img src={c.image} alt={c.name} loading="lazy" className="w-full h-full object-cover" />
+                    <img src={c.image} alt={c.name} width="1600" height="1200" loading="lazy" decoding="async" className="w-full h-full object-cover" />
                     {c.featured && (
                       <div className="absolute top-3 left-3 bg-[#1a120c] text-[#faf6ef] px-3 py-1 rounded-full text-[10px] font-semibold tracking-[0.08em] uppercase">Most reserved</div>
                     )}
