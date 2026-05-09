@@ -4,6 +4,32 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 
+  <!-- Consent default-deny (Google Consent Mode v2) — must run before GTM/GA4/Pixel -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+      functionality_storage: 'denied',
+      security_storage: 'granted',
+      wait_for_update: 500
+    });
+    try {
+      if (localStorage.getItem('cookieConsent') === 'accepted') {
+        gtag('consent', 'update', {
+          ad_storage: 'granted',
+          ad_user_data: 'granted',
+          ad_personalization: 'granted',
+          analytics_storage: 'granted',
+          functionality_storage: 'granted'
+        });
+      }
+    } catch (e) {}
+  </script>
+
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -92,6 +118,8 @@
   s.parentNode.insertBefore(t,s)}(window, document,'script',
   'https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', '1010088628028812');
+  // Default revoke until cookie banner consent — events queued no-op until grant
+  try { if (localStorage.getItem('cookieConsent') !== 'accepted') fbq('consent', 'revoke'); } catch(e) {}
   fbq('track', 'PageView');
   fbq('track', 'ViewContent', { content_name: location.pathname, content_category: 'page_view' });
   </script>
@@ -1106,8 +1134,9 @@
 
   <!-- ============================================================
        Lead tracker — session, UTM capture, page_view + page_dwell
-       to own API, plus waitlist + Lead-pixel helpers (window.__postWaitlist
-       and window.__fireLeadPixel) consumed by the FinalCTA form.
+       to own API (gated on cookie consent), plus waitlist + Lead-pixel
+       helpers consumed by the FinalCTA form (always available — form
+       submit IS the user's explicit consent for lead processing).
        Wired by /bt-lead-tracker, site_slug = "mira".
        ============================================================ -->
   <script>
@@ -1116,7 +1145,7 @@
     var SITE = 'mira';
     var VARIANT = 'v1';
 
-    /* ── Session ID ── */
+    /* ── Session ID (essential for form de-dup; allowed pre-consent) ── */
     var sid = sessionStorage.getItem('_tk_sid');
     if (!sid) { sid = Date.now().toString(36) + Math.random().toString(36).slice(2, 8); sessionStorage.setItem('_tk_sid', sid); }
 
@@ -1144,18 +1173,19 @@
       }
     }
 
-    /* ── Page View ── */
-    sendEvent({ event: 'page_view', page: location.pathname });
-
-    /* ── Dwell Tracker ── */
+    /* ── Dwell Tracker (always wired; only sends if consent granted) ── */
     var pageEnter = Date.now();
     var pages = JSON.parse(sessionStorage.getItem('_tk_pages') || '[]');
     pages.push({ p: location.pathname, t: pageEnter });
     sessionStorage.setItem('_tk_pages', JSON.stringify(pages));
 
+    function consentGranted() {
+      try { return localStorage.getItem('cookieConsent') === 'accepted'; } catch(e) { return false; }
+    }
+
     var dwellFired = false;
     function fireDwell() {
-      if (dwellFired) return;
+      if (dwellFired || !consentGranted()) return;
       dwellFired = true;
       var sec = Math.round((Date.now() - pageEnter) / 1000);
       var pg = JSON.parse(sessionStorage.getItem('_tk_pages') || '[]');
@@ -1166,6 +1196,15 @@
     }
     document.addEventListener('visibilitychange', function() { if (document.visibilityState === 'hidden') fireDwell(); });
     window.addEventListener('beforeunload', fireDwell);
+
+    /* ── Page View (only if consent already granted from prior visit) ── */
+    if (consentGranted()) sendEvent({ event: 'page_view', page: location.pathname });
+
+    /* ── Hook for cookie banner: grant -> retroactively fire page_view ── */
+    window.__grantTrackerConsent = function() {
+      if (!consentGranted()) return;
+      sendEvent({ event: 'page_view', page: location.pathname });
+    };
 
     /* ── Browsing Data Helpers (for waitlist API) ── */
     function getBrowsingData() {
@@ -1184,7 +1223,7 @@
       return parts.join('|').slice(0, 100);
     }
 
-    /* ── Waitlist Submit ── */
+    /* ── Waitlist Submit (always available; form submit = explicit consent) ── */
     window.__postWaitlist = function(email) {
       return fetch(API_BASE + '/waitlist', {
         method: 'POST',
@@ -1205,6 +1244,85 @@
         fbq('track', 'Lead', Object.assign({ content_name: SITE + '_reserve', value: 0, currency: 'USD' }, utm));
       }
     };
+  })();
+  </script>
+
+  <!-- ============================================================
+       Cookie consent banner (GDPR / CCPA / EU ePrivacy)
+       - Default state: trackers denied (set in <head> Consent Mode block)
+       - Banner shows on first visit until user picks Accept or Decline
+       - Decision persists in localStorage; banner hidden on subsequent visits
+       ============================================================ -->
+  <div id="cookie-banner" role="region" aria-label="Cookie consent" hidden>
+    <div class="cb-inner">
+      <p class="cb-text">
+        We use cookies to remember your reservation and to understand how this page is used. See our
+        <a href="./privacy.html">Privacy Policy</a>.
+      </p>
+      <div class="cb-actions">
+        <button id="cb-reject" type="button">Decline</button>
+        <button id="cb-accept" type="button">Accept</button>
+      </div>
+    </div>
+  </div>
+  <style>
+    #cookie-banner {
+      position: fixed; bottom: 16px; left: 16px; right: 16px; z-index: 9999;
+      max-width: 540px; margin: 0 auto;
+      background: #1a120c; color: #faf6ef;
+      padding: 18px 22px; border-radius: 14px;
+      box-shadow: 0 8px 28px rgba(0,0,0,.28);
+      font-family: 'Barlow', system-ui, sans-serif; font-size: 14px; line-height: 1.5;
+    }
+    #cookie-banner[hidden] { display: none; }
+    #cookie-banner .cb-inner { display: flex; flex-direction: column; gap: 12px; }
+    #cookie-banner .cb-text { margin: 0; }
+    #cookie-banner .cb-actions { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+    #cookie-banner button {
+      font-family: inherit; font-size: 13px; font-weight: 500;
+      padding: 8px 18px; border-radius: 9999px; border: 0; cursor: pointer;
+      transition: opacity .15s ease;
+    }
+    #cookie-banner button:hover { opacity: .85; }
+    #cb-accept { background: #faf6ef; color: #1a120c; }
+    #cb-reject { background: transparent; color: #faf6ef; border: 1px solid rgba(250,246,239,.3); }
+    #cookie-banner a { color: #dcaf69; text-decoration: underline; }
+    @media (min-width: 480px) {
+      #cookie-banner .cb-inner { flex-direction: row; align-items: center; }
+      #cookie-banner .cb-text { flex: 1; }
+    }
+  </style>
+  <script>
+  (function(){
+    var stored;
+    try { stored = localStorage.getItem('cookieConsent'); } catch(e) {}
+    if (stored === 'accepted' || stored === 'rejected') return;
+    var banner = document.getElementById('cookie-banner');
+    if (!banner) return;
+    banner.hidden = false;
+    document.getElementById('cb-accept').addEventListener('click', function(){
+      try { localStorage.setItem('cookieConsent', 'accepted'); } catch(e) {}
+      banner.hidden = true;
+      if (typeof gtag === 'function') {
+        gtag('consent', 'update', {
+          ad_storage: 'granted',
+          ad_user_data: 'granted',
+          ad_personalization: 'granted',
+          analytics_storage: 'granted',
+          functionality_storage: 'granted'
+        });
+      }
+      if (typeof fbq === 'function') {
+        fbq('consent', 'grant');
+        fbq('track', 'PageView');
+        fbq('track', 'ViewContent', { content_name: location.pathname, content_category: 'page_view' });
+      }
+      if (typeof window.__grantTrackerConsent === 'function') window.__grantTrackerConsent();
+    });
+    document.getElementById('cb-reject').addEventListener('click', function(){
+      try { localStorage.setItem('cookieConsent', 'rejected'); } catch(e) {}
+      banner.hidden = true;
+    });
   })();
   </script>
 
