@@ -3,6 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-N73F9MGJ');</script>
+  <!-- End Google Tag Manager -->
+
+  <!-- Google tag (gtag.js) — GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0G6L1Q4SRC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0G6L1Q4SRC');
+  </script>
+
   <title>Memory Frame — The frame that knows your family.</title>
   <meta name="description" content="A wood-framed display with on-device AI for your mom's living room. She talks to it. It listens. It shows her the photos that matter today. No app, no monthly fee, no cloud. Reserve for $1." />
 
@@ -62,6 +80,25 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1010088628028812');
+  fbq('track', 'PageView');
+  fbq('track', 'ViewContent', { content_name: location.pathname, content_category: 'page_view' });
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1010088628028812&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin></script>
@@ -200,6 +237,11 @@
   </style>
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N73F9MGJ"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
   <div id="root"></div>
 
   <script type="text/babel" data-presets="env,react">
@@ -931,6 +973,34 @@
 
     /* ============== FINAL CTA ============== */
     function FinalCTA() {
+      const [email, setEmail] = useState("");
+      const [submitting, setSubmitting] = useState(false);
+      const [submitted, setSubmitted] = useState(false);
+      const [error, setError] = useState("");
+
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        const trimmed = email.trim();
+        if (!trimmed) return;
+        setSubmitting(true);
+        setError("");
+        try {
+          const data = await (window.__postWaitlist
+            ? window.__postWaitlist(trimmed)
+            : Promise.resolve({ ok: false, error: "Tracker not loaded" }));
+          if (data && data.ok) {
+            setSubmitted(true);
+            if (window.__fireLeadPixel) window.__fireLeadPixel();
+          } else {
+            setError((data && data.error) || "Something went wrong. Please try again.");
+            setSubmitting(false);
+          }
+        } catch (err) {
+          setError("Network hiccup — please try again.");
+          setSubmitting(false);
+        }
+      };
+
       return (
         <section id="reserve" className="relative bg-black overflow-hidden">
           <div className="relative px-8 py-20 md:py-44 text-center">
@@ -949,28 +1019,47 @@
               $1 holds your spot. Full price ($399&ndash;$729) charged when your frame ships. 30-day refund.
             </p>
 
-            <form
-              className="relative mt-10 flex items-center gap-2 max-w-md mx-auto liquid-glass rounded-full p-1.5"
-              onSubmit={(e) => { e.preventDefault(); alert("Thanks. We'll email you to confirm your $1 hold."); }}
-              action="#waitlist-handler-todo"
-              data-conversion="reservation_signup"
-            >
-              <input
-                type="email"
-                name="email"
-                required
-                placeholder="Your email"
-                aria-label="Your email"
-                autoComplete="email"
-                className="relative z-10 flex-1 bg-transparent border-0 outline-none px-4 text-sm text-white placeholder-white/45 font-body"
-              />
-              <button type="submit" className="relative z-10 bg-white text-black rounded-full px-5 py-2.5 text-sm font-medium flex items-center gap-2">
-                Reserve $1 <ArrowUpRight className="h-4 w-4"/>
-              </button>
-            </form>
+            {submitted ? (
+              <div className="relative mt-10 max-w-md mx-auto liquid-glass rounded-full px-6 py-4 text-center">
+                <p className="relative z-10 text-sm text-white/95 font-body">
+                  ✓ You're on the list. We'll email you to confirm your spot before charging the $1.
+                </p>
+              </div>
+            ) : (
+              <>
+                <form
+                  className="relative mt-10 flex items-center gap-2 max-w-md mx-auto liquid-glass rounded-full p-1.5"
+                  onSubmit={handleSubmit}
+                  data-conversion="reservation_signup"
+                >
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    placeholder="Your email"
+                    aria-label="Your email"
+                    autoComplete="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    disabled={submitting}
+                    className="relative z-10 flex-1 bg-transparent border-0 outline-none px-4 text-sm text-white placeholder-white/45 font-body disabled:opacity-60"
+                  />
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="relative z-10 bg-white text-black rounded-full px-5 py-2.5 text-sm font-medium flex items-center gap-2 disabled:opacity-60"
+                  >
+                    {submitting ? "Sending…" : <>Reserve $1 <ArrowUpRight className="h-4 w-4"/></>}
+                  </button>
+                </form>
+                {error && (
+                  <p className="relative mt-3 text-xs text-red-300/90 font-body" role="alert">{error}</p>
+                )}
+              </>
+            )}
 
             <p className="relative mt-6 text-xs text-white/55 font-body font-light">
-              Not ready? <a href="#waitlist" className="underline underline-offset-4 text-white">Join the waitlist with email only — no $1 hold.</a>
+              Not ready? <a href="#reserve" className="underline underline-offset-4 text-white">Join the waitlist with email only — no $1 hold.</a>
             </p>
           </div>
         </section>
@@ -1016,57 +1105,108 @@
   </script>
 
   <!-- ============================================================
-       AD_PIXEL_SLOT: Meta (Facebook/Instagram)
-       Replace YOUR_PIXEL_ID below with your real Pixel ID before launch.
-       Then uncomment the script block.
+       Lead tracker — session, UTM capture, page_view + page_dwell
+       to own API, plus waitlist + Lead-pixel helpers (window.__postWaitlist
+       and window.__fireLeadPixel) consumed by the FinalCTA form.
+       Wired by /bt-lead-tracker, site_slug = "mira".
        ============================================================ -->
-  <!--
   <script>
-    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', 'YOUR_PIXEL_ID');
-    fbq('track', 'PageView');
-  </script>
-  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1" alt="" /></noscript>
-  -->
+  (function(){
+    var API_BASE = 'https://immich-photo-box-waitlist.bytedev2022.workers.dev/api';
+    var SITE = 'mira';
+    var VARIANT = 'v1';
 
-  <!-- ============================================================
-       AD_PIXEL_SLOT: Google Analytics 4
-       Replace YOUR_GA4_ID with your real Measurement ID (G-XXXXXXX).
-       ============================================================ -->
-  <!--
-  <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_GA4_ID"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'YOUR_GA4_ID');
-  </script>
-  -->
+    /* ── Session ID ── */
+    var sid = sessionStorage.getItem('_tk_sid');
+    if (!sid) { sid = Date.now().toString(36) + Math.random().toString(36).slice(2, 8); sessionStorage.setItem('_tk_sid', sid); }
 
-  <!-- ============================================================
-       AD_PIXEL_SLOT: TikTok
-       Replace YOUR_TIKTOK_PIXEL_ID with your real Pixel ID.
-       ============================================================ -->
-  <!--
-  <script>
-    !function (w, d, t) {
-      w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"];ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e};ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
-      ttq.load('YOUR_TIKTOK_PIXEL_ID');
-      ttq.page();
-    }(window, document, 'ttq');
-  </script>
-  -->
+    /* ── UTM Capture ── */
+    var utm = JSON.parse(sessionStorage.getItem('_tk_utm') || '{}');
+    if (!sessionStorage.getItem('_tk_utm')) {
+      var sp = new URLSearchParams(location.search);
+      ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(function(k){
+        var v = sp.get(k); if(v) utm[k] = v;
+      });
+      if (Object.keys(utm).length) sessionStorage.setItem('_tk_utm', JSON.stringify(utm));
+    }
 
-  <!-- ============================================================
-       COOKIE_CONSENT_BANNER
-       Uncomment + style + wire up before launch (EU GDPR / CA CCPA).
-       ============================================================ -->
-  <!--
-  <div id="cookie-banner" role="region" aria-label="Cookie consent" style="position:fixed;bottom:16px;left:16px;right:16px;max-width:480px;margin:0 auto;background:#1a120c;color:#faf6ef;padding:16px 20px;border-radius:14px;box-shadow:0 8px 28px rgba(0,0,0,.25);font-family:Barlow,sans-serif;font-size:14px;z-index:9999;">
-    <p style="margin:0 0 12px 0;line-height:1.5;">We use minimal cookies to make this page work and to remember your reservation. <a href="#privacy" style="color:#dcaf69;">Learn more</a>.</p>
-    <button onclick="document.getElementById('cookie-banner').remove();localStorage.setItem('cookieConsent','accepted');" style="background:#faf6ef;color:#1a120c;border:0;padding:8px 16px;border-radius:9999px;font-weight:500;cursor:pointer;">OK</button>
-  </div>
-  -->
+    /* ── Send Event ── */
+    function sendEvent(evt) {
+      evt.site = SITE;
+      evt.session_id = sid;
+      evt.referrer = document.referrer || '';
+      Object.assign(evt, utm);
+      var payload = JSON.stringify(evt);
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(API_BASE + '/events', new Blob([payload], { type: 'text/plain' }));
+      } else {
+        fetch(API_BASE + '/events', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload, keepalive: true });
+      }
+    }
+
+    /* ── Page View ── */
+    sendEvent({ event: 'page_view', page: location.pathname });
+
+    /* ── Dwell Tracker ── */
+    var pageEnter = Date.now();
+    var pages = JSON.parse(sessionStorage.getItem('_tk_pages') || '[]');
+    pages.push({ p: location.pathname, t: pageEnter });
+    sessionStorage.setItem('_tk_pages', JSON.stringify(pages));
+
+    var dwellFired = false;
+    function fireDwell() {
+      if (dwellFired) return;
+      dwellFired = true;
+      var sec = Math.round((Date.now() - pageEnter) / 1000);
+      var pg = JSON.parse(sessionStorage.getItem('_tk_pages') || '[]');
+      if (pg.length) { pg[pg.length - 1].d = sec; }
+      sessionStorage.setItem('_tk_pages', JSON.stringify(pg));
+      sendEvent({ event: 'page_dwell', page: location.pathname, dwell_seconds: sec });
+      if (typeof fbq === 'function') fbq('trackCustom', 'PageDwell', { content_name: location.pathname, dwell_seconds: sec });
+    }
+    document.addEventListener('visibilitychange', function() { if (document.visibilityState === 'hidden') fireDwell(); });
+    window.addEventListener('beforeunload', fireDwell);
+
+    /* ── Browsing Data Helpers (for waitlist API) ── */
+    function getBrowsingData() {
+      var pg = JSON.parse(sessionStorage.getItem('_tk_pages') || '[]');
+      if (pg.length) { pg[pg.length - 1].d = Math.round((Date.now() - pg[pg.length - 1].t) / 1000); }
+      return pg.map(function(e) { return e.p + ':' + ((e.d || 0)) + 's'; }).join('|').slice(0, 100);
+    }
+    function getUtmCompact() {
+      var u = JSON.parse(sessionStorage.getItem('_tk_utm') || '{}');
+      var parts = [];
+      if(u.utm_source) parts.push('src:' + u.utm_source);
+      if(u.utm_medium) parts.push('med:' + u.utm_medium);
+      if(u.utm_campaign) parts.push('cam:' + u.utm_campaign);
+      if(u.utm_content) parts.push('con:' + u.utm_content);
+      if(u.utm_term) parts.push('trm:' + u.utm_term);
+      return parts.join('|').slice(0, 100);
+    }
+
+    /* ── Waitlist Submit ── */
+    window.__postWaitlist = function(email) {
+      return fetch(API_BASE + '/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email,
+          site: SITE,
+          variant: VARIANT,
+          use_case: getUtmCompact(),
+          current_solution: getBrowsingData()
+        })
+      }).then(function(r) { return r.json(); });
+    };
+
+    /* ── Fire Lead on Pixel ── */
+    window.__fireLeadPixel = function() {
+      if (typeof fbq === 'function') {
+        fbq('track', 'Lead', Object.assign({ content_name: SITE + '_reserve', value: 0, currency: 'USD' }, utm));
+      }
+    };
+  })();
+  </script>
 
 </body>
 </html>
